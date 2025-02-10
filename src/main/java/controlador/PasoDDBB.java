@@ -10,6 +10,7 @@ import modelo.Albentrada_lineaspre;
 
 public class PasoDDBB {
 
+    //HOLAAA
     public PasoDDBB(ArrayList<Albentrada_lineaspre> salidaPartida) {
         
         boolean correcto = false;
