@@ -11,7 +11,8 @@ public class ConexionMYSQL {
 
     private static Connection cnxM = null;
 
-
+ 
+    
     public static Connection obtenerNetAgroMayes() {
         EditorPropiedades propiedades = new EditorPropiedades();
         final String usuario = propiedades.obtenPropiedad("MYSQLmayesUsuario");
