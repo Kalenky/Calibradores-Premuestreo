@@ -1,6 +1,5 @@
 
 package conexion;
-//casasasasasas
 import java.sql.*;
 import javax.swing.JOptionPane;
 import recursos.EditorPropiedades;
