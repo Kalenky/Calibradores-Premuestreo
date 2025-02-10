@@ -11,7 +11,7 @@ import modelo.Albentrada_lineaspre;
 public class PasoDDBB {
 
     //HOLAAA
-    public PasoDDBB(ArrayList<Albentrada_lineaspre> salidaPartida) {
+    public PasoDDBB(ArrayList<Albentrada_lineaspre> salidaPartida,String rutaArchivo) {
         
         boolean correcto = false;
         try {// Llama al metodo obtenerNetAgroMayes() de la clase ConexionMYSQL   
@@ -78,6 +78,11 @@ public class PasoDDBB {
 
                 }
             }
+            
+            if(correcto){
+             correcto = TratarArchivos.moverArchivo("");
+            }
+            
         } catch (SQLException e) {
             System.out.println(e.toString());
         }

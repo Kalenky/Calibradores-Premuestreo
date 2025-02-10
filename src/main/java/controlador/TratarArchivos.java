@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 import modelo.Albentrada_lineaspre;
 
 import modelo.OrigenDetallePartida;
@@ -54,6 +55,7 @@ public class TratarArchivos {
 
         ArrayList<OrigenDetallePartida> detallePartida = new ArrayList<OrigenDetallePartida>();
         OrigenPartida salidaPartida = null;
+        String rutaArchivo="";
         try {
             //ABRE EL .CVS
             FileReader cvs = new FileReader(archivo.getAbsoluteFile());
@@ -64,7 +66,7 @@ public class TratarArchivos {
             while ((salida = br.readLine()) != null) {
 
                 if (k == 1) {
-                    //No hacemos nada
+                   rutaArchivo=archivo.getAbsolutePath();
                 } else if (k == 2) {
 
                     salidaPartida = ObtenerPartida(salida);
@@ -80,7 +82,7 @@ public class TratarArchivos {
             }
             salidaPartida.setDetalle(detallePartida);
 
-            processarAntesDeEnviarDDBB(salidaPartida);
+            processarAntesDeEnviarDDBB(salidaPartida,rutaArchivo);
 
         } catch (IOException ex) {
             System.err.println("Error leyendo el archivo: " + archivo.getName());
@@ -89,7 +91,7 @@ public class TratarArchivos {
 
     }
 
-    private void processarAntesDeEnviarDDBB(OrigenPartida salidaPartida) {
+    private void processarAntesDeEnviarDDBB(OrigenPartida salidaPartida,String rutaArchivo) {
 
         //OBTNERER DE LA BASE DE DATOS EL NUMERO INTERNO DE LA PARTIDA.
         int obtenerIDPartida = obtenerPartida(salidaPartida.getNumeroPartida());
@@ -106,7 +108,7 @@ public class TratarArchivos {
 
             enviarBBDD.add(lineaEnvio);
 
-            PasoDDBB enviarDatos = new PasoDDBB(enviarBBDD);
+            PasoDDBB enviarDatos = new PasoDDBB(enviarBBDD,rutaArchivo);
 
         }
 
@@ -190,5 +192,93 @@ public class TratarArchivos {
             return 0;
         }
     }
+    
+    
+    
+    
+    //Recibe un ruta de un archivo  devuelve true si lo lgra.
+    public static boolean moverArchivo(String rutaOrigen){
+        EditorPropiedades e = new   EditorPropiedades();
+        String rutaDestino = e.obtenPropiedad("rutaDestino");
+       
+        
+        
+        return true;
+    }
+    
+    
+    public static DefaultTableModel listarArchivos (String ruta,DefaultTableModel modeloOriginal){
+        
+        
+    /*
+        
+            public TratarArchivos() {
 
+        EditorPropiedades e = new EditorPropiedades();
+
+        String ruta = e.obtenPropiedad("RutaCarpeta");
+
+        File carpeta = new File(ruta);
+
+        
+        FilenameFilter filtor = new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.toLowerCase().endsWith(".csv");
+            }
+        };
+
+        File[] archivos = carpeta.listFiles(filtor);
+
+        
+        for (int i = 0; i < archivos.length; i++) {
+            ProcesarArchivo(archivos[i]);
+        }
+    
+        
+        private DefaultTableModel obtenerPartida(String partida,DefaultTableModel modelo){
+     int idPartida;
+        try{
+            idPartida=Integer.parseInt(partida);
+            
+            Connection con= conexion.ConexionMYSQL.obtenerNetAgroMayes();
+         
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM albentrada_lineaspre WHERE ALR_idlineaentrada=?");
+            ps.setInt(1, idPartida);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            ResultSetMetaData rsmd = ps.getMetaData();
+            
+           
+            
+            for(int i=1;i<=rsmd.getColumnCount();i++){
+                modelo.addColumn(rsmd.getColumnName(i));
+            }
+            
+            while(rs.next()){
+                
+                Object[]linea=new Object[rsmd.getColumnCount()];
+                 for(int i=0;i<rsmd.getColumnCount();i++){
+                    linea[i]=rs.getObject(i+1);
+                 }
+                 modelo.addRow(linea);
+            }
+            
+         
+            
+        }catch(NumberFormatException|SQLException  e){
+            System.out.println(e.toString());
+            JOptionPane.showMessageDialog(this,"No es una partida correcta");
+        }
+        */
+      
+        modeloOriginal.addRow(new Object[]{"P0000001","12-01-2025"});
+    
+    return modeloOriginal;
+    
+    }
+    
+    
+    
 }
